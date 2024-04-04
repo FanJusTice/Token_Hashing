@@ -1,3 +1,3 @@
 # academic-HBNU
-My Campus Project Repository.
+My Campus Project Repository,
 Uploaded here as my reserch project.
