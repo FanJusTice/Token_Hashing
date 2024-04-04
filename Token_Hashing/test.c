@@ -1,9 +1,7 @@
 #include "Token_hashing.h"
 #include "time.h"
 
-/*  Test:
-    This is a simple test example to test the creation, insertion, search, deletion, update in Level hashing
-*/
+
 int main(int argc, char* argv[])
 {
     if (argc != 6)
