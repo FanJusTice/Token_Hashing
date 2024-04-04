@@ -8,4 +8,8 @@
 # Run
 1. Run `makefile` to generate an executable file `Token` : `make`
 3. Run `Token` with the input parameters `level_size` `insert_data_1` `query_data_1` `insert_data_2` `query_data_2`
+<<<<<<< HEAD
    - e.g., `./Token 2 1.txt 2.txt 3.txt 4.txt`
+=======
+   - e.g., `./Token 2 1.txt 2.txt 3.txt 4.txt`
+>>>>>>> 09aa31a2a363e66eec11a333004b721f3a6eca19
