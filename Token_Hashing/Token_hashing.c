@@ -18,7 +18,11 @@ uint64_t S_HASH(level_hash *level, const uint8_t *key) {
 
 /*
 Function: F_IDX()
+<<<<<<< HEAD
+        Compute the first hash location
+=======
         Compute the second hash location
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
 */
 uint64_t F_IDX(uint64_t hashKey, uint64_t capacity) {
     return hashKey % (capacity / 2);
@@ -57,7 +61,11 @@ void generate_seeds(level_hash *level)
 
 /*
 Function: level_init()
+<<<<<<< HEAD
+        Initialize a token hash table
+=======
         Initialize a level hash table
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
 */
 level_hash *level_init(uint64_t level_size)
 {
@@ -95,7 +103,11 @@ level_hash *level_init(uint64_t level_size)
 
 /*
 Function: level_expand()
+<<<<<<< HEAD
+        Expand a token hash table in place;
+=======
         Expand a level hash table in place;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
         Put a new level on top of the old hash table and only rehash the
         items in the bottom level of the old hash table;
 */
@@ -208,7 +220,10 @@ void level_expand(level_hash *level)
                     exit(1);
                 }
 
+<<<<<<< HEAD
+=======
                 // level->buckets[1][old_idx].token[i] = 0;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
             }
         }
     }
@@ -221,7 +236,11 @@ void level_expand(level_hash *level)
 
 /*
 Function: level_shrink()
+<<<<<<< HEAD
+        Shrink a token hash table in place;
+=======
         Shrink a level hash table in place;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
         Put a new level at the bottom of the old hash table and only rehash the
         items in the top level of the old hash table;
 */
@@ -262,8 +281,11 @@ void level_shrink(level_hash *level)
                         printf("The shrinking fails: 3\n");
                         exit(1);
                 }
+<<<<<<< HEAD
+=======
 
             // interimBuckets[old_idx].token[i] = 0;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
             }
         }
     }
@@ -275,7 +297,11 @@ void level_shrink(level_hash *level)
 
 /*
 Function: level_dynamic_query()
+<<<<<<< HEAD
+        Lookup a key-value item in token hash table via danamic search scheme;
+=======
         Lookup a key-value item in level hash table via danamic search scheme;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
         First search the level with more items;
 */
 uint8_t* level_dynamic_query(level_hash *level, uint8_t *key)
@@ -336,7 +362,11 @@ uint8_t* level_dynamic_query(level_hash *level, uint8_t *key)
 
 /*
 Function: level_static_query()
+<<<<<<< HEAD
+        Lookup a key-value item in token hash table via static search scheme;
+=======
         Lookup a key-value item in level hash table via static search scheme;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
         Always first search the top level and then search the bottom level;
 */
 uint8_t* level_static_query(level_hash *level, uint8_t *key)
@@ -372,7 +402,11 @@ uint8_t* level_static_query(level_hash *level, uint8_t *key)
 
 /*
 Function: level_delete()
+<<<<<<< HEAD
+        Remove a key-value item from token hash table;
+=======
         Remove a key-value item from level hash table;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
         The function can be optimized by using the dynamic search scheme
 */
 uint8_t level_delete(level_hash *level, uint8_t *key)
@@ -409,7 +443,11 @@ uint8_t level_delete(level_hash *level, uint8_t *key)
 
 /*
 Function: level_update()
+<<<<<<< HEAD
+        Update the value of a key-value item in token hash table;
+=======
         Update the value of a key-value item in level hash table;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
         The function can be optimized by using the dynamic search scheme
 */
 uint8_t level_update(level_hash *level, uint8_t *key, uint8_t *new_value)
@@ -446,7 +484,11 @@ uint8_t level_update(level_hash *level, uint8_t *key, uint8_t *new_value)
 
 /*
 Function: level_insert()
+<<<<<<< HEAD
+        Insert a key-value item into token hash table;
+=======
         Insert a key-value item into level hash table;
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
 */
 uint8_t level_insert(level_hash *level, uint8_t *key, uint8_t *value)
 {
@@ -614,7 +656,11 @@ int b2t_movement(level_hash *level, uint64_t idx)
 
 /*
 Function: level_destroy()
+<<<<<<< HEAD
+        Destroy a token hash table
+=======
         Destroy a level hash table
+>>>>>>> a1e9f10300d771807ddbdc9a43861bcf372d4c26
 */
 void level_destroy(level_hash *level)
 {
