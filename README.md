@@ -5,6 +5,6 @@
 - The code for token hashing is run in `DRAM` platform.
 
 # Run
-1. Run `makefile` to generate an executable file `Token` : `make`.
+1. Run `makefile` to generate an executable file `Token` : `make`
 3. Run `Token` with the input parameters `level_size` `insert_data_1` `query_data_1` `insert_data_2` `query_data_2`
-  - e.g., `./Token 2 1.txt 2.txt 3.txt 4.txt`.
+  - e.g., `./Token 2 1.txt 2.txt 3.txt 4.txt`
