@@ -96,8 +96,9 @@ level_hash *level_init(uint64_t level_size)
 /*
 Function: level_expand()
         Expand a token hash table in place;
-        Put a new level on top of the old hash table and only rehash the
-        items in the bottom level of the old hash table;
+        Put a new level on top of the old hash tablel;
+        rehash all items in the bottom level of the old hash table;
+        rehash the item which token is equal or greater than '01'.
 */
 void level_expand(level_hash *level)
 {
