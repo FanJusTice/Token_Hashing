@@ -33,8 +33,7 @@ uint64_t S_IDX(uint64_t hashKey, uint64_t capacity) {
 }
 
 
-void* alignedmalloc(size_t size)
-{
+void* alignedmalloc(size_t size) {
   void* ret;
   posix_memalign(&ret, 64, size);
   return ret;
@@ -65,7 +64,7 @@ level_hash *level_init(uint64_t level_size)
     level_hash *level = alignedmalloc(sizeof(level_hash));
     if (!level)
     {
-        printf("The token hash table initialization fails:1\n");
+        printf("The level hash table initialization fails:1\n");
         exit(1);
     }
 
@@ -82,23 +81,24 @@ level_hash *level_init(uint64_t level_size)
 
     if (!level->buckets[0] || !level->buckets[1])
     {
-        printf("The token hash table initialization fails:2\n");
+        printf("The level hash table initialization fails:2\n");
         exit(1);
     }
 
-    printf("Token hashing: ASSOC_NUM %d, KEY_LEN %d, VALUE_LEN %d \n", ASSOC_NUM, KEY_LEN, VALUE_LEN);
+    printf("Level hashing: ASSOC_NUM %d, KEY_LEN %d, VALUE_LEN %d \n", ASSOC_NUM, KEY_LEN, VALUE_LEN);
     printf("The number of top-level buckets: %ld\n", level->addr_capacity);
     printf("The number of all buckets: %ld\n", level->total_capacity);
     printf("The number of all entries: %ld\n", level->total_capacity*ASSOC_NUM);
-    printf("The token hash table initialization succeeds!\n");
+    printf("The level hash table initialization succeeds!\n");
     return level;
 }
 
 /*
 Function: level_expand()
         Expand a token hash table in place;
-        Put a new level on top of the old hash table and rehash the
-        items in the bottom level of the old hash table;
+        Put a new level on top of the old hash tablel;
+        rehash all items in the bottom level of the old hash table;
+        rehash the item which token is equal or greater than '01'.
 */
 void level_expand(level_hash *level)
 {
@@ -124,6 +124,7 @@ void level_expand(level_hash *level)
             {
                 uint8_t *key = level->buckets[1][old_idx].slot[i].key;
                 uint8_t *value = level->buckets[1][old_idx].slot[i].value;
+
                 uint64_t f_idx = F_IDX(F_HASH(level, key), level->addr_capacity);
                 uint64_t s_idx = S_IDX(S_HASH(level, key), level->addr_capacity);
 
@@ -175,6 +176,7 @@ void level_expand(level_hash *level)
             {
                 uint8_t *key = level->buckets[1][new_idx].slot[i].key;
                 uint8_t *value = level->buckets[1][new_idx].slot[i].value;
+
                 uint64_t f_idx = F_IDX(F_HASH(level, key), level->addr_capacity);
                 uint64_t s_idx = S_IDX(S_HASH(level, key), level->addr_capacity);
 
@@ -369,6 +371,7 @@ uint8_t* level_static_query(level_hash *level, uint8_t *key)
 /*
 Function: level_delete()
         Remove a key-value item from token hash table;
+        The function can be optimized by using the dynamic search scheme
 */
 uint8_t level_delete(level_hash *level, uint8_t *key)
 {
@@ -382,7 +385,7 @@ uint8_t level_delete(level_hash *level, uint8_t *key)
         for(j = 0; j < ASSOC_NUM; j ++){
             if (level->buckets[i][f_idx].token[j] >= 1&&strcmp(level->buckets[i][f_idx].slot[j].key, key) == 0)
             {
-                level->buckets[i][f_idx].token[j] = EMPTY;
+                level->buckets[i][f_idx].token[j] = 0;
                 level->level_item_num[i] --;
                 return 0;
             }
@@ -390,7 +393,7 @@ uint8_t level_delete(level_hash *level, uint8_t *key)
         for(j = 0; j < ASSOC_NUM; j ++){
             if (level->buckets[i][s_idx].token[j] >= 1&&strcmp(level->buckets[i][s_idx].slot[j].key, key) == 0)
             {
-                level->buckets[i][s_idx].token[j] = EMPTY;
+                level->buckets[i][s_idx].token[j] = 0;
                 level->level_item_num[i] --;
                 return 0;
             }
@@ -547,6 +550,7 @@ uint8_t try_movement(level_hash *level, uint64_t idx, uint64_t level_num, uint8_
                 level->buckets[level_num][jdx].token[j] = level->buckets[level_num][idx].token[i];
                 level->buckets[level_num][idx].token[i] = EMPTY;
                 // The movement is finished and then the new item is inserted
+
                 memcpy(level->buckets[level_num][idx].slot[i].key, key, KEY_LEN);
                 memcpy(level->buckets[level_num][idx].slot[i].value, value, VALUE_LEN);
                 level->buckets[level_num][idx].token[i] = VAILD_DATA;
